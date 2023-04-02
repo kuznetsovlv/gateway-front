@@ -1,0 +1,53 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "eslint-config-silence",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier", "jest"],
+  "settings": {
+    "react": {
+      "version": "detect" // React version. "detect" automatically picks the version you have installed.
+    }
+  },
+  "rules": {
+    "prettier/prettier": ["error"],
+    "no-case-declarations": ["off"],
+    "eqeqeq": ["warn"],
+    "sonarjs/no-small-switch": ["off"],
+    "sonarjs/max-switch-cases": ["off"],
+    "sonarjs/cognitive-complexity": ["warn", 27],
+    "init-declarations": ["off"],
+    "no-bitwise": ["off"],
+    "no-extra-boolean-cast": ["off"],
+    "no-multi-assign": ["off"],
+    "unicorn/consistent-function-scoping": ["off"], // Switched off because of incorrect works
+    "unicorn/no-unsafe-regex": ["off"],
+    "unicorn/number-literal-case": ["off"],
+    "unicorn/prefer-string-slice": ["off"],
+    "unicorn/prefer-query-selector": ["off"],
+    "no-return-assign": ["off"],
+    "no-param-reassign": ["off"],
+    "react/prop-types": ["off"],
+    "jsx-a11y/click-events-have-key-events": ["off"],
+    "jsx-a11y/no-static-element-interactions": ["off"],
+    "jsx-a11y/no-autofocus": ["off"],
+    "jsx-a11y/no-noninteractive-element-interactions": ["off"]
+  }
+}
