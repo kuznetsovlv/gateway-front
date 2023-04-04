@@ -40,9 +40,10 @@ module.exports = {
   },
   devServer: {
     port: 8080,
-    open: true,
-    hot: true,
-    client: { logging: 'warn', progress: true },
+    open: development,
+    hot: development,
+    historyApiFallback: true,
+    client: { logging: 'warn', progress: development },
     proxy: { '/api/v1/': 'http://localhost:8000' }
   },
   resolve: {
@@ -84,8 +85,7 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-          options: { presets: ['@babel/preset-env', '@babel/preset-react'] }
+          loader: 'babel-loader'
         }
       }
     ]

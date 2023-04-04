@@ -1,8 +1,8 @@
-// import './assets/index.html';
-// import './index.scss';
+import './assets/index.html';
+import './index.scss';
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
-const App = () => <div>APP</div>;
+import App from './App';
 
-render(<App />, document.getElementById('root'));
+createRoot(document.getElementById('root')).render(<App />);
