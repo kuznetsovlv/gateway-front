@@ -34,6 +34,7 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: resolve(__dirname, 'dist'),
+    publicPath: '/',
     clean: true,
     assetModuleFilename: 'assets/[hash][ext]'
   },
