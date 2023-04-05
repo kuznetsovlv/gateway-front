@@ -1,0 +1,23 @@
+.root {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+
+  .errorBlock {
+    position: absolute;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 2px;
+    right: 0;
+    bottom: 0;
+    width: 500px;
+    margin: 20px;
+    padding: 10px;
+    background: #0000;
+
+  }
+}

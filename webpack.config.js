@@ -50,7 +50,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       components: resolve(__dirname, 'src', 'components'),
-      pages: resolve(__dirname, 'src', 'pages')
+      pages: resolve(__dirname, 'src', 'pages'),
+      ErrorHandler: resolve(__dirname, 'src', 'ErrorHandler')
     }
   },
   optimization: {
