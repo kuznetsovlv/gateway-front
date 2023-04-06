@@ -47,6 +47,8 @@
     "unicorn/prefer-query-selector": ["off"],
     "no-return-assign": ["off"],
     "no-param-reassign": ["off"],
+    "promise/param-names": ["off"],
+    "no-promise-executor-return": ["off"],
     "react/prop-types": ["off"],
     "react/display-name": ["off"],
     "jsx-a11y/click-events-have-key-events": ["off"],

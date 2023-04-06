@@ -49,8 +49,11 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
+      api: resolve(__dirname, 'src', 'api'),
       components: resolve(__dirname, 'src', 'components'),
       pages: resolve(__dirname, 'src', 'pages'),
+      utils: resolve(__dirname, 'src', 'utils'),
+      types: resolve(__dirname, 'src', 'types'),
       ErrorHandler: resolve(__dirname, 'src', 'ErrorHandler')
     }
   },

@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -68,25 +68,19 @@ class ErrorProcessor {
   }
 }
 
-const errorProcessor = new ErrorProcessor();
-
-const ErrorContext = createContext();
-
-export const useErrorProcessor = () => useContext(ErrorContext);
+export const errorProcessor = new ErrorProcessor();
 
 const ErrorHandler = observer(({ children }) => (
-  <ErrorContext.Provider value={errorProcessor}>
-    <div className={styles.root}>
-      {children}
-      <div className={styles.errorBlock}>
-        {errorProcessor.list.map(({ id, text }) => (
-          <ErrorItem key={id} id={id} onDelete={errorProcessor.removeError}>
-            {text}
-          </ErrorItem>
-        ))}
-      </div>
+  <div className={styles.root}>
+    {children}
+    <div className={styles.errorBlock}>
+      {errorProcessor.list.map(({ id, text }) => (
+        <ErrorItem key={id} id={id} onDelete={errorProcessor.removeError}>
+          {text}
+        </ErrorItem>
+      ))}
     </div>
-  </ErrorContext.Provider>
+  </div>
 ));
 
 ErrorHandler.propTypes = {

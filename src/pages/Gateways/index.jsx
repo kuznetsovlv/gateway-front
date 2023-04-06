@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { useErrorProcessor } from 'ErrorHandler';
+import { errorProcessor } from 'ErrorHandler';
 
 export default () => {
-  const errorProcessor = useErrorProcessor();
-
   useEffect(() => {
     const interval = setInterval(() => {
       try {
