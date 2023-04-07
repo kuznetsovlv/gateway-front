@@ -5,7 +5,7 @@ export default errorProcessor => {
       const response = await Reflect.apply(originalFetch, this, [url, ...arg]);
 
       if (response.ok) {
-        return toCamelCaseProps(response.clone().json());
+        return response.json().then(toCamelCaseProps);
       }
       const { status, statusText = `Request ${url} failed.` } = response;
 
