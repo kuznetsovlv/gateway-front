@@ -1,10 +1,13 @@
 import React from 'react';
 
+import StoreProvider from './StoreProvider';
 import ErrorHandler from './ErrorHandler';
 import Layout from './Layout';
 
 export default () => (
-  <ErrorHandler>
-    <Layout />
-  </ErrorHandler>
+  <StoreProvider>
+    <ErrorHandler>
+      <Layout />
+    </ErrorHandler>
+  </StoreProvider>
 );

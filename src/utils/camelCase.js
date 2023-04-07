@@ -30,8 +30,7 @@ export const toCamelCaseProps = obj => {
     return obj.map(item => toCamelCaseProps(item));
   }
 
-  return Object.entries(obj).reduce((res, [key, value]) => {
-    res[toCamelCaseWorld(key)] = toCamelCaseProps(value);
-    return res;
-  }, {});
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [toCamelCaseWorld(key), value])
+  );
 };

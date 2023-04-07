@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 
-import { errorProcessor } from 'ErrorHandler';
+import { useStore, ERROR_PROCESSOR_KEY } from 'StoreProvider';
 
-export default () => {
+export default observer(() => {
+  const store = useStore();
+  const errorProcessor = store.get(ERROR_PROCESSOR_KEY);
+
   useEffect(() => {
     const interval = setInterval(() => {
       try {
@@ -16,4 +20,4 @@ export default () => {
   }, []);
 
   return <>Gateways</>;
-};
+});

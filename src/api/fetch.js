@@ -1,7 +1,4 @@
-import { errorProcessor } from 'ErrorHandler';
-import { toCamelCaseProps } from 'utils';
-
-const BASE_URL = `${window.location.origin}/api/v1`;
+const BASE_URL = `${globalThis.location.origin}/api/v1`;
 
 const REST_API_METHOD = {
   GET: 'GET',
@@ -66,27 +63,8 @@ const fetchData = ({ url, data, method, headers = {} }) => {
       );
   }
 
-  return fetch(url, options)
-    .then(response => {
-      const { ok, status, statusText = `Request ${url} failed.` } = response;
-      if (!ok || status < 200 || status >= 300) {
-        throw new Error(`Status code ${status}: ${statusText}`);
-      }
-
-      return response.json();
-    })
-    .then(toCamelCaseProps);
+  return fetch(url, options);
 };
-
-/**
- * @param {string} url
- * @param {Data} [data]
- * @param {Method} method
- * @param {Headers} [headers = {}]
- * @return {Promise<*>}
- */
-const fetchDataWithErrorHandling = ({ url, data, method, headers = {} }) =>
-  fetchData({ url, data, method, headers }).catch(errorProcessor.putError);
 
 /**
  * @param {string} url
@@ -95,7 +73,7 @@ const fetchDataWithErrorHandling = ({ url, data, method, headers = {} }) =>
  * @return {Promise<*>}
  */
 export const fetchGet = (url, { data, headers = {} } = {}) =>
-  fetchDataWithErrorHandling({
+  fetchData({
     url,
     data,
     headers,
@@ -109,7 +87,7 @@ export const fetchGet = (url, { data, headers = {} } = {}) =>
  * @return {Promise<*>}
  */
 export const fetchPost = (url, { data, headers = {} } = {}) =>
-  fetchDataWithErrorHandling({
+  fetchData({
     url,
     data,
     headers,
@@ -123,7 +101,7 @@ export const fetchPost = (url, { data, headers = {} } = {}) =>
  * @return {Promise<*>}
  */
 export const fetchPut = (url, { data, headers = {} } = {}) =>
-  fetchDataWithErrorHandling({
+  fetchData({
     url,
     data,
     headers,
@@ -137,7 +115,7 @@ export const fetchPut = (url, { data, headers = {} } = {}) =>
  * @return {Promise<*>}
  */
 export const fetchDelete = (url, { data, headers = {} } = {}) =>
-  fetchDataWithErrorHandling({
+  fetchData({
     url,
     data,
     headers,

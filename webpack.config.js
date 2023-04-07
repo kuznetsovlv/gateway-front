@@ -54,7 +54,7 @@ module.exports = {
       pages: resolve(__dirname, 'src', 'pages'),
       utils: resolve(__dirname, 'src', 'utils'),
       types: resolve(__dirname, 'src', 'types'),
-      ErrorHandler: resolve(__dirname, 'src', 'ErrorHandler')
+      StoreProvider: resolve(__dirname, 'src', 'StoreProvider')
     }
   },
   optimization: {
