@@ -63,7 +63,7 @@ const fetchData = ({ url, data, method, headers = {} }) => {
       );
   }
 
-  return fetch(url, options);
+  return fetch(url, options).then(res => res ?? null);
 };
 
 /**
