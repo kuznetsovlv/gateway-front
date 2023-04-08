@@ -5,24 +5,27 @@ import clsx from 'clsx';
 
 import styles from './Row.module.scss';
 
-const Row = ({ className, children, link }) => {
+const Row = ({ className, children, link, title }) => {
   className = clsx(styles.root, className);
 
   return link ? (
-    <Link className={className} to={link}>
+    <Link className={className} to={link} title={title}>
       {children}
     </Link>
   ) : (
-    <div className={className}>{children}</div>
+    <div className={className} title={title}>
+      {children}
+    </div>
   );
 };
 
 Row.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
-  link: PropTypes.string
+  link: PropTypes.string,
+  title: PropTypes.string
 };
 
-Row.defaultProps = { className: null, link: null };
+Row.defaultProps = { className: null, link: null, title: null };
 
 export default Row;
