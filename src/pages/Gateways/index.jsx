@@ -6,13 +6,14 @@ import { useStore, ERROR_PROCESSOR_KEY } from 'StoreProvider';
 import { Loader } from 'components';
 import { GATEWAYS_STORE_KEY } from './constants';
 import GateWaysStore from './GateWaysStore';
+import List from './List';
 import styles from './GatewaysPage.module.scss';
 
 export default observer(() => {
   const store = useStore();
 
   const gateways = store.get(GATEWAYS_STORE_KEY);
-  const loading = !gateways || gateways.loading;
+  const loading = !gateways;
 
   useEffect(() => {
     if (!store.has(GATEWAYS_STORE_KEY)) {
@@ -21,13 +22,11 @@ export default observer(() => {
         new GateWaysStore(store.get(ERROR_PROCESSOR_KEY))
       );
     }
-
-    store.get(GATEWAYS_STORE_KEY).fetchData();
   }, []);
 
   return (
     <div className={clsx(styles.root, { [styles.loading]: loading })}>
-      {loading ? <Loader /> : <>Gateways</>}
+      {loading ? <Loader /> : <List data={gateways} />}
     </div>
   );
 });

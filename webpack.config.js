@@ -54,7 +54,8 @@ module.exports = {
       pages: resolve(__dirname, 'src', 'pages'),
       utils: resolve(__dirname, 'src', 'utils'),
       types: resolve(__dirname, 'src', 'types'),
-      StoreProvider: resolve(__dirname, 'src', 'StoreProvider')
+      StoreProvider: resolve(__dirname, 'src', 'StoreProvider'),
+      routes: resolve(__dirname, 'src', 'routes.js')
     }
   },
   optimization: {

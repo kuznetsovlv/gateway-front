@@ -1,0 +1,11 @@
+.root {
+  display: table-row-group;
+  font-size: 1.1rem;
+
+  &>*:nth-child(even) {
+    background: aliceblue;
+  }
+  &>*:nth-child(odd) {
+    background: beige;
+  }
+}
