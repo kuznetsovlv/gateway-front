@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 import { Table, Page } from 'components';
-import { GATEWAY_ROUTE } from 'routes';
+import Item from './Item';
 import GateWaysStore from './GateWaysStore';
 
 const Main = observer(({ data }) => {
@@ -15,21 +15,20 @@ const Main = observer(({ data }) => {
     <Page title="Gateways" loading={data.loading}>
       <Table>
         <Table.Header>
-          <Table.Cell align="center">Header cell</Table.Cell>
-          <Table.Cell align="center">Header cell</Table.Cell>
-          <Table.Cell align="center">Header cell</Table.Cell>
+          <Table.Cell align="center">Name</Table.Cell>
+          <Table.Cell align="center">Serial</Table.Cell>
+          <Table.Cell />
         </Table.Header>
         <Table.Body>
-          <Table.Row link={GATEWAY_ROUTE}>
-            <Table.Cell align="left">Row cell</Table.Cell>
-            <Table.Cell></Table.Cell>
-            <Table.Cell align="right">Row cell</Table.Cell>
-          </Table.Row>
-          <Table.Row link={GATEWAY_ROUTE}>
-            <Table.Cell align="right">Row cell</Table.Cell>
-            <Table.Cell>Row cell</Table.Cell>
-            <Table.Cell></Table.Cell>
-          </Table.Row>
+          <Item serial="serial" name="name" onClick={console.log} />
+          {data.list.map(({ serial, name }) => (
+            <Item
+              key={serial}
+              serial={serial}
+              name={name}
+              onClick={console.log}
+            />
+          ))}
         </Table.Body>
       </Table>
     </Page>
