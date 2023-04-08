@@ -17,16 +17,16 @@ $link_height: 50px;
   text-overflow: ellipsis;
   overflow-x: hidden;
 
-  box-shadow: 1px 1px 1px 1px #003200;
+  box-shadow: 1px 1px 1px #003200;
 
   &:hover {
     font-size: 1.6rem;
-    box-shadow: 2px 2px 2px 2px #003200;
+    box-shadow: 2px 2px 2px #003200;
   }
 
   &:active {
     font-size: 1.4rem;
-    box-shadow: inset 1px 1px 1px 1px #003200;
+    box-shadow: inset 1px 1px 1px #003200;
   }
 
   .plus {
