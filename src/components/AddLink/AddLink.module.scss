@@ -1,0 +1,39 @@
+$link_height: 50px;
+
+.root {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: $link_height;
+  line-height: $link_height;
+  background: lawngreen;
+  color: darkgreen;
+  text-decoration: none;
+
+  font-size: 1.5rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+
+  box-shadow: 1px 1px 1px 1px #003200;
+
+  &:hover {
+    font-size: 1.6rem;
+    box-shadow: 2px 2px 2px 2px #003200;
+  }
+
+  &:active {
+    font-size: 1.4rem;
+    box-shadow: inset 1px 1px 1px 1px #003200;
+  }
+
+  .plus {
+    font-size: 1.5em;
+  }
+
+  .text {
+
+  }
+}
