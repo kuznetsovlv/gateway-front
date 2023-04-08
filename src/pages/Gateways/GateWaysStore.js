@@ -2,7 +2,7 @@ import 'types';
 import 'StoreProvider';
 import { makeAutoObservable, observable } from 'mobx';
 
-import { getGatewayList } from 'api';
+import { getGatewayList, deleteGateway } from 'api';
 
 export default class GateWaysStore {
   /**
@@ -30,6 +30,7 @@ export default class GateWaysStore {
     this.$errorProcessor = errorProcessor;
 
     this.fetchData = this.fetchData.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   /**
@@ -46,6 +47,9 @@ export default class GateWaysStore {
     return this.$loading;
   }
 
+  /**
+   * @return {Generator<Promise<SimpleGateway>, void>}
+   */
   *fetchData() {
     if (this.$loading) {
       return;
@@ -57,6 +61,32 @@ export default class GateWaysStore {
       const list = yield getGatewayList();
 
       this.$list = observable(list ?? []);
+    } catch (error) {
+      this.$errorProcessor.putError(error);
+    }
+
+    this.$loading = false;
+  }
+
+  /**
+   * @param serial
+   * @return {Generator<Promise<void>, void>}
+   */
+  *delete(serial) {
+    if (this.$loading || !serial) {
+      return;
+    }
+
+    this.$loading = true;
+
+    try {
+      yield deleteGateway(serial);
+
+      const index = this.$list.findIndex(item => item.serial === serial);
+
+      if (index >= 0) {
+        this.$list.splice(index, 1);
+      }
     } catch (error) {
       this.$errorProcessor.putError(error);
     }

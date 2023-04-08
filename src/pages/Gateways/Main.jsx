@@ -20,13 +20,12 @@ const Main = observer(({ data }) => {
           <Table.Cell />
         </Table.Header>
         <Table.Body>
-          <Item serial="serial" name="name" onClick={console.log} />
           {data.list.map(({ serial, name }) => (
             <Item
               key={serial}
               serial={serial}
               name={name}
-              onClick={console.log}
+              onClick={data.delete}
             />
           ))}
         </Table.Body>

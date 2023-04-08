@@ -21,3 +21,10 @@ export const getGatewayList = () => fetchGet(PATH.GATEWAYS);
  */
 export const getGateway = serial =>
   fetchGet(PATH.GATEWAY, { data: { serial } });
+
+/**
+ * @param {string} serial
+ * @return {Promise<void>}
+ */
+export const deleteGateway = serial =>
+  fetchDelete(PATH.GATEWAY, { data: { serial } });
