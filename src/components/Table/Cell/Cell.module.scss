@@ -6,6 +6,10 @@ $height: 40px;
   height: $height;
   line-height: $height;
   vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
 
   &.left {
     text-align: left;
