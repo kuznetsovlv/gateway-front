@@ -1,4 +1,9 @@
+import './ErrorProcessor';
 import { toCamelCaseProps } from 'utils';
+
+/**
+ * @param {ErrorProcessor} errorProcessor
+ */
 export default errorProcessor => {
   globalThis.fetch = (function (originalFetch) {
     return async (...args) => {

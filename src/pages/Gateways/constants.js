@@ -1,0 +1,1 @@
+export const GATEWAYS_STORE_KEY = 'GATEWAYS_STORE_KEY';

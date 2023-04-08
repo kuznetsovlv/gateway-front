@@ -14,7 +14,7 @@ export default class StoreMap {
 
   /**
    * @param {string} id
-   * @return {Observable}
+   * @return {observable}
    */
   get(id) {
     return this.$map.get(id);
@@ -26,5 +26,13 @@ export default class StoreMap {
    */
   set(id, obj) {
     this.$map.set(id, obj);
+  }
+
+  /**
+   * @param {string} id
+   * @return {boolean}
+   */
+  has(id) {
+    return this.$map.has(id);
   }
 }
