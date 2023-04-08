@@ -7,16 +7,19 @@ import { toCamelCaseProps } from 'utils';
 export default errorProcessor => {
   globalThis.fetch = (function (originalFetch) {
     return async (...args) => {
-      return (async (url, ...args) => {
-        const response = await Reflect.apply(originalFetch, this, [
-          url,
-          ...args
-        ]);
+      return (async (...args) => {
+        const response = await Reflect.apply(originalFetch, this, [...args]);
 
         if (response.ok) {
-          return response.json().then(toCamelCaseProps);
+          switch (response.headers.get('Content-Type')) {
+            case 'application/json':
+              return response.json().then(toCamelCaseProps);
+            default:
+              return response.blob();
+          }
         }
-        const { status, statusText = `Request ${url} failed.` } = response;
+        const { status, statusText = `Request ${response.url} failed.` } =
+          response;
 
         throw new Error(`Status code ${status}: ${statusText}`);
       })(...args).then(toCamelCaseProps, errorProcessor.putError);
