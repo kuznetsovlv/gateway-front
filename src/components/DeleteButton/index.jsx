@@ -17,7 +17,7 @@ const DeleteButton = ({ onClick }) => (
       [onClick]
     )}
   >
-    -
+    &ndash;
   </Button>
 );
 

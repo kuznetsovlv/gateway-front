@@ -1,11 +1,10 @@
-$size: 18px;
+$size: 26px;
 
 .root {
   width: $size;
   height: $size;
   padding: 0;
   margin: 0 5px 0 0;
-  line-height: $size;
   border-radius: calc($size/2);
-  //font-size: 1.2rem;
+  font-size: 1.2rem;
 }
