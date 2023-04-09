@@ -12,6 +12,8 @@ const Button = memo(
       {
         [styles.add]: !disabled && type === 'add',
         [styles.normal]: !disabled && type === 'normal',
+        [styles.submit]: !disabled && type === 'submit',
+        [styles.delete]: !disabled && type === 'delete',
         [styles.disabled]: disabled
       },
       className
@@ -29,7 +31,7 @@ const Button = memo(
       <button
         className={className}
         type={type === 'submit' ? 'submit' : 'button'}
-        // disabled={disabled}
+        disabled={disabled}
         onClick={onClick}
       >
         {children}
