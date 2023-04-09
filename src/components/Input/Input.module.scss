@@ -9,8 +9,9 @@ $message_height: 15px;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: stretch;
-  margin: 5px 2px;
+  margin: 5px 0;
   font-size: 1rem;
+  box-sizing: content-box;
 
   .label {
     margin: 0 0 2px 0;
