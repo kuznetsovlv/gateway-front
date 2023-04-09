@@ -11,7 +11,7 @@ const PATH = {
 };
 
 /**
- * @return {Promise<SimpleGateway>}
+ * @return {Promise<SimpleGateway[]>}
  */
 export const getGatewayList = () => fetchGet(PATH.GATEWAYS);
 
@@ -43,3 +43,94 @@ export const putGateway = ({ serial, name, ip, devices = [] }) => {
  */
 export const deleteGateway = serial =>
   fetchDelete(PATH.GATEWAY, { data: { serial } });
+
+/**
+ * @param {string} serial
+ * @return {Promise<SimpleDevice[]>}
+ */
+export const getDeviceList = serial => {
+  const data = {};
+
+  if (serial) {
+    data.serial = serial;
+  }
+  return fetchGet(PATH.DEVICES, { data });
+};
+
+/**
+ * @param {number} uuid
+ * @return {Promise<Device>}
+ */
+export const getDevice = uuid => fetchGet(PATH.DEVICE, { data: { uuid } });
+
+/**
+ * @param {number} [uuid]
+ * @param {string} [vendor]
+ * @param {Status} [status]
+ * @return {Promise<number>}
+ */
+export const putDevice = ({ uuid, vendor, status }) => {
+  const data = {};
+  if (uuid) {
+    data.uuid = uuid;
+  }
+
+  if (vendor) {
+    data.vendor = vendor;
+  }
+
+  if (status) {
+    data.status = status;
+  }
+
+  return fetchPut(PATH.DEVICE, { data }).then(({ uuid }) => uuid);
+};
+
+/**
+ * @param {number} uuid
+ * @return {Promise<void>}
+ */
+export const deleteDevice = uuid =>
+  fetchDelete(PATH.DEVICE, { data: { uuid } });
+
+/**
+ * @param {string} serial
+ * @param {number[]} [devices = []
+ * @return {Promise<number[]>}
+ */
+export const bind = (serial, devices = []) => {
+  if (!devices.length) {
+    return new Promise((_, reject) =>
+      reject(new Error('No devices to bind with gateway'))
+    );
+  }
+  if (!serial) {
+    return new Promise((_, reject) =>
+      reject(new Error('No gateway to bind with devices'))
+    );
+  }
+
+  return fetchPost(PATH.BIND, { data: { serial, devices } }).then(
+    ({ bound }) => bound
+  );
+};
+
+/**
+ * @param {string} serial
+ * @param {number[]} [devices = []
+ * @return {Promise<void>}
+ */
+export const unbind = (serial, devices = []) => {
+  if (!devices.length) {
+    return new Promise((_, reject) =>
+      reject(new Error('No devices to bind with gateway'))
+    );
+  }
+  if (!serial) {
+    return new Promise((_, reject) =>
+      reject(new Error('No gateway to bind with devices'))
+    );
+  }
+
+  return fetchPost(PATH.UNBIND, { data: { serial, devices } });
+};
