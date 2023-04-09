@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import styles from './Table.module.scss';
 
-const Table = ({ className, children }) => (
+const Table = memo(({ className, children }) => (
   <div className={clsx(styles.root, className)}>{children}</div>
-);
+));
 
 Table.propTypes = {
   className: PropTypes.string,

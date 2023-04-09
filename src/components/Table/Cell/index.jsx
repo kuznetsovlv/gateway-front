@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import styles from './Cell.module.scss';
 
-const Cell = ({ className, children, align }) => (
+const Cell = memo(({ className, children, align }) => (
   <div
     className={clsx(
       styles.root,
@@ -18,7 +18,7 @@ const Cell = ({ className, children, align }) => (
   >
     {children}
   </div>
-);
+));
 
 Cell.propTypes = {
   className: PropTypes.string,

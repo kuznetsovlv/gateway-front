@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
 import styles from './Row.module.scss';
 
-const Row = ({ className, children, link, title }) => {
+const Row = memo(({ className, children, link, title }) => {
   className = clsx(styles.root, className);
 
   return link ? (
@@ -17,7 +17,7 @@ const Row = ({ className, children, link, title }) => {
       {children}
     </div>
   );
-};
+});
 
 Row.propTypes = {
   className: PropTypes.string,

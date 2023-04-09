@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import Loader from '../Loader';
 import styles from './Page.module.scss';
 
-const Page = ({ title, children, loading }) => (
+const Page = memo(({ title, children, loading }) => (
   <div className={styles.root}>
     <header className={styles.header}>
       {!!title && <h1 className={styles.title}>{title}</h1>}
     </header>
     <main className={styles.main}>{loading ? <Loader /> : children}</main>
   </div>
-);
+));
 
 Page.propTypes = {
   title: PropTypes.string,

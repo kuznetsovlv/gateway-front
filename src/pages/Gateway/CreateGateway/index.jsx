@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
 import { putGateway } from 'api';
 import { Page, Input, IPInput } from 'components';
 
-const CreateGateway = () => {
+const CreateGateway = memo(() => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [ip, setIp] = useState(null);
@@ -26,6 +26,6 @@ const CreateGateway = () => {
       />
     </Page>
   );
-};
+});
 
 export default CreateGateway;

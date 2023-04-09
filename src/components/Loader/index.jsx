@@ -1,3 +1,3 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export default () => <>Loader is under construction </>;
+export default memo(() => <>Loader is under construction </>);
