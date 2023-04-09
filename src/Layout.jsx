@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, memo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Lazy } from 'components';
@@ -15,7 +15,7 @@ const Gateways = lazy(() => import('pages/Gateways'));
 const NotFound = lazy(() => import('pages/NotFound'));
 const Root = lazy(() => import('pages/Root'));
 
-export default () => (
+export default memo(() => (
   <BrowserRouter>
     <Routes>
       <Route
@@ -60,4 +60,4 @@ export default () => (
       />
     </Routes>
   </BrowserRouter>
-);
+));
