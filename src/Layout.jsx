@@ -1,7 +1,7 @@
 import React, { lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { Lazy } from '/components';
+import { Lazy } from 'components';
 import {
   DEVICE_ROUTE,
   GATEWAYS_ROUTE,

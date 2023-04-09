@@ -1,0 +1,68 @@
+$label_height: 15px;
+$input_height: 40px;
+$message_height: 15px;
+
+.root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  margin: 5px 2px;
+  font-size: 1rem;
+
+  .label {
+    margin: 0 0 2px 0;
+    height: $label_height;
+    line-height: $label_height;
+    font-size: 0.9em;
+
+    &.required {
+      &:after {
+        content: '*';
+        color: #f00;
+      }
+    }
+  }
+
+  .input {
+    height: $input_height;
+    line-height: $input_height;
+    padding: 5px 10px;
+    font-size: 1.2em;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid #ccc;
+    background: #eee;
+
+    &:focus {
+      outline: 1px solid #ccf;
+    }
+
+    &.error {
+      border: 1px solid #c00;
+      background: #faa;
+      color: #f00;
+
+      &:focus {
+        outline: 1px solid #f00;
+      }
+    }
+  }
+
+  .errorMessage {
+    font-size: 0.9em;
+    color: #f00;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 1px 0 0 0;
+    height: $message_height;
+    line-height: $message_height;
+
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+}
