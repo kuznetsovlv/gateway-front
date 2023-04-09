@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '../Button';
 import styles from './DeleteButton.module.scss';
 
 const DeleteButton = ({ onClick }) => (
-  <input
+  <Button
     className={styles.root}
-    type="button"
-    value="-"
+    type="delete"
     onClick={useCallback(
       event => {
         event.preventDefault();
@@ -16,7 +16,9 @@ const DeleteButton = ({ onClick }) => (
       },
       [onClick]
     )}
-  />
+  >
+    -
+  </Button>
 );
 
 DeleteButton.propTypes = { onClick: PropTypes.func.isRequired };

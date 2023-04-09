@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
+import Button from '../Button';
 import styles from './AddLink.module.scss';
 
 const AddLink = memo(({ className, to, text }) => (
-  <Link className={clsx(styles.root, className)} to={to}>
+  <Button className={clsx(styles.root, className)} link={to} type="add">
     <span className={styles.plus}>+</span>{' '}
     <span className={styles.text}>{text}</span>
-  </Link>
+  </Button>
 ));
 
 AddLink.propTypes = {

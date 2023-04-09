@@ -1,4 +1,8 @@
+$border: 1px solid #333;
+
 .root {
   display: table;
   width: 100%;
+  border-right: $border;
+  border-left: $border;
 }
