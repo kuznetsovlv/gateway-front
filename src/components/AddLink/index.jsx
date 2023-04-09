@@ -5,8 +5,13 @@ import clsx from 'clsx';
 import Button from '../Button';
 import styles from './AddLink.module.scss';
 
-const AddLink = memo(({ className, to, text }) => (
-  <Button className={clsx(styles.root, className)} link={to} type="add">
+const AddLink = memo(({ className, disabled, to, text }) => (
+  <Button
+    className={clsx(styles.root, className)}
+    disabled={disabled}
+    link={to}
+    type="add"
+  >
     <span className={styles.plus}>+</span>{' '}
     <span className={styles.text}>{text}</span>
   </Button>
@@ -14,10 +19,11 @@ const AddLink = memo(({ className, to, text }) => (
 
 AddLink.propTypes = {
   className: PropTypes.string,
+  disabled: PropTypes.bool,
   to: PropTypes.string.isRequired,
   text: PropTypes.string
 };
 
-AddLink.defaultProps = { className: null, text: null };
+AddLink.defaultProps = { className: null, disabled: false, text: null };
 
 export default AddLink;

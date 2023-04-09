@@ -70,6 +70,22 @@
         box-shadow: inset 1px 1px 1px #c55;
       }
     }
+  }
 
+  &.disabled {
+    cursor: default;
+    background: #efefef55;
+    color: #10101055;
+    font-size: 1.5rem;
+
+    &:hover {
+      cursor: default;
+      font-size: 1.5rem;
+    }
+
+    &:active {
+      cursor: default;
+      font-size: 1.5rem;
+    }
   }
 }

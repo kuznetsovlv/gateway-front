@@ -5,31 +5,43 @@ import clsx from 'clsx';
 
 import styles from './Button.module.scss';
 
-const Button = memo(({ className, children, link, type, onClick }) => {
-  className = clsx(
-    styles.root,
-    { [styles.add]: type === 'add', [styles.normal]: type === 'normal' },
-    className
-  );
+const Button = memo(
+  ({ className, children, disabled, link, type, onClick }) => {
+    className = clsx(
+      styles.root,
+      {
+        [styles.add]: !disabled && type === 'add',
+        [styles.normal]: !disabled && type === 'normal',
+        [styles.disabled]: disabled
+      },
+      className
+    );
 
-  return link ? (
-    <Link className={clsx(styles.root, className)} to={link} onClick={onClick}>
-      {children}
-    </Link>
-  ) : (
-    <button
-      className={className}
-      type={type === 'submit' ? 'submit' : 'button'}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-});
+    return link && !disabled ? (
+      <Link
+        className={clsx(styles.root, className)}
+        to={link}
+        onClick={onClick}
+      >
+        {children}
+      </Link>
+    ) : (
+      <button
+        className={className}
+        type={type === 'submit' ? 'submit' : 'button'}
+        // disabled={disabled}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
+  disabled: PropTypes.bool,
   link: PropTypes.string,
   type: 'normal' | 'delete' | 'submit' | 'add',
   onClick: PropTypes.func
@@ -38,6 +50,7 @@ Button.propTypes = {
 Button.defaultProps = {
   className: null,
   children: null,
+  disabled: false,
   link: null,
   type: 'normal',
   onClick: null
