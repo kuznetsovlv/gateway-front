@@ -27,14 +27,14 @@ export const getGateway = serial =>
  * @param {string} name
  * @param {number} ip
  * @param {number[]} [devices = []]
- * @return {Promise<*>}
+ * @return {Promise<string>}
  */
 export const putGateway = ({ serial, name, ip, devices = [] }) => {
   const data = { name, ip: ip << 0, devices };
   if (serial) {
     data.serial = serial;
   }
-  return fetchPut(PATH.GATEWAY, { data });
+  return fetchPut(PATH.GATEWAY, { data }).then(({ serial }) => serial);
 };
 
 /**
