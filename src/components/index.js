@@ -3,7 +3,7 @@ export Button from './Button';
 export DeleteButton from './DeleteButton';
 export Input from './Input';
 export IPInput from './IPInput';
-export Lazy from './Lazy';
+export Lazy from './Lazy/lazy';
 export Loader from './Loader';
 export Page from './Page';
 export Table from './Table';

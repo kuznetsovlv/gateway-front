@@ -33,5 +33,11 @@ $header_padding: 10px;
     overflow: auto;
     padding: 7px;
     background: #eee2;
+
+    &.loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

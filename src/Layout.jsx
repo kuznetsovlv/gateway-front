@@ -7,7 +7,7 @@ import {
   GATEWAYS_ROUTE,
   GATEWAY_ROUTE,
   ROOT_ROUTE
-} from './routes';
+} from 'routes';
 
 const Device = lazy(() => import('pages/Device'));
 const Gateway = lazy(() => import('pages/Gateway'));
