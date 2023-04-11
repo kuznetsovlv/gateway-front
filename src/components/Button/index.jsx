@@ -45,7 +45,7 @@ Button.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   link: PropTypes.string,
-  type: 'normal' | 'delete' | 'submit' | 'add',
+  type: PropTypes.oneOf(['normal', 'delete', 'submit', 'add']),
   onClick: PropTypes.func
 };
 

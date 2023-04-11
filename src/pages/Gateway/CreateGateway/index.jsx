@@ -33,7 +33,7 @@ const CreateGateway = memo(() => {
         type="submit"
         disabled={ip === null || !name}
         onClick={() => {
-          setName(true);
+          setLoading(true);
           putGateway({ name, ip }).then(
             serial => {
               setLoading(false);
