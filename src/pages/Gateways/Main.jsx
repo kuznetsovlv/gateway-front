@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 import { GATEWAY_ROUTE } from 'routes';
-import { Table, Page, AddLink } from 'components';
+import { Table, Page, AddButton } from 'components';
 import Item from './Item';
 import GateWaysStore from './GateWaysStore';
 
@@ -31,7 +31,7 @@ const Main = observer(({ data }) => {
           ))}
         </Table.Body>
       </Table>
-      <AddLink to={GATEWAY_ROUTE} text="Create new gateway" />
+      <AddButton to={GATEWAY_ROUTE} text="Create new gateway" />
     </Page>
   );
 });

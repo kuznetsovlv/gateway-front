@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import Button from '../Button';
-import styles from './AddLink.module.scss';
+import styles from './AddButton.module.scss';
 
-const AddLink = memo(({ className, disabled, to, text }) => (
+const AddButton = memo(({ className, disabled, to, text }) => (
   <Button
     className={clsx(styles.root, className)}
     disabled={disabled}
@@ -17,13 +17,13 @@ const AddLink = memo(({ className, disabled, to, text }) => (
   </Button>
 ));
 
-AddLink.propTypes = {
+AddButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   to: PropTypes.string.isRequired,
   text: PropTypes.string
 };
 
-AddLink.defaultProps = { className: null, disabled: false, text: null };
+AddButton.defaultProps = { className: null, disabled: false, text: null };
 
-export default AddLink;
+export default AddButton;

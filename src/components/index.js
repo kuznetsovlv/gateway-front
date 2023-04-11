@@ -1,4 +1,4 @@
-export AddLink from './AddLink';
+export AddButton from './AddButton';
 export Button from './Button';
 export DeleteButton from './DeleteButton';
 export Input from './Input';

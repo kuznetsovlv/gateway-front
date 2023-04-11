@@ -6,7 +6,7 @@ const BYTE_SIZE = 8;
  * @param {number|null} num
  * @return {string|null}
  */
-export const numToStr = num => {
+export const numIPToStrIp = num => {
   if (!Number.isInteger(num)) {
     return null;
   }
@@ -23,7 +23,7 @@ export const numToStr = num => {
   return bites.reverse().join('.');
 };
 
-export const strToNum = str => {
+export const strIPToNumIP = str => {
   if (!/^(?:\d{1,3})(?:\.(?:\d{1,3})){3}$/.test(str)) {
     return null;
   }

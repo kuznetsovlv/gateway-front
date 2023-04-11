@@ -1,18 +1,18 @@
 import React, { useState, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 
-import Input from '../Input';
-import { numToStr, strToNum } from './utils';
+import Input from './Input';
+import { numIPToStrIp, strIPToNumIP } from 'utils';
 
 const validators = [
   str =>
-    Number.isInteger(strToNum(str))
+    Number.isInteger(strIPToNumIP(str))
       ? { valid: true }
       : { valid: false, message: 'Invalid ip format' }
 ];
 
 const IPInput = memo(({ value, onChange, ...props }) => {
-  const [ip, setIp] = useState(numToStr(value) ?? '');
+  const [ip, setIp] = useState(numIPToStrIp(value) ?? '');
 
   return (
     <Input
@@ -22,7 +22,7 @@ const IPInput = memo(({ value, onChange, ...props }) => {
       onChange={useCallback(
         (value, conf) => {
           setIp(value);
-          onChange(strToNum(value), conf);
+          onChange(strIPToNumIP(value), conf);
         },
         [onChange]
       )}
