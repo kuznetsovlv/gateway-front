@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
-const Gateway = ({ serial }) => <>Gateway {serial}</>;
+import GatewayStore from 'pages/Gateway/GatewayStore';
 
-Gateway.propTypes = { serial: PropTypes.string.isRequired };
+const Gateway = observer(({ data }) => <>Gateway {data.serial}</>);
+
+Gateway.propTypes = { data: PropTypes.instanceOf(GatewayStore).isRequired };
 
 export default Gateway;
