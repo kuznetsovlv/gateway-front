@@ -7,6 +7,7 @@ import styles from './DeleteButton.module.scss';
 const DeleteButton = ({ onClick }) => (
   <Button
     className={styles.root}
+    circled
     type="delete"
     onClick={useCallback(
       event => {

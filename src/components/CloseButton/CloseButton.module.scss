@@ -1,0 +1,47 @@
+$div_height: 2px;
+
+.root {
+  position: relative;
+
+  &:hover {
+    div {
+      height: 3px;
+    }
+  }
+
+  &.disabled:hover {
+    div {
+      height: $div_height;
+    }
+  }
+
+  div {
+    height: $div_height;
+    width: 90%;
+    background: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+
+
+    &:first-child {
+      rotate: 45deg;
+    }
+    &:last-child {
+      rotate: -45deg;
+    }
+  }
+
+  &.delete {
+    &:hover {
+      div {
+        background: #ff1493;
+      }
+    }
+
+    div {
+      background: #ff149388;
+    }
+  }
+}
