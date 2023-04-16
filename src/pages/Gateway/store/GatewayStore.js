@@ -95,7 +95,7 @@ export default class GatewayStore {
    * @return {string|null}
    */
   get name() {
-    return this.$name;
+    return this.$name ?? this.$serial;
   }
 
   /**
