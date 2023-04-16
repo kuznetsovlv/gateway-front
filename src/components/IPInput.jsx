@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 
 import Input from './Input';
@@ -13,6 +13,10 @@ const validators = [
 
 const IPInput = memo(({ value, onChange, ...props }) => {
   const [ip, setIp] = useState(numIPToStrIp(value) ?? '');
+
+  useEffect(() => {
+    setIp(numIPToStrIp(value) ?? '');
+  }, [value]);
 
   return (
     <Input

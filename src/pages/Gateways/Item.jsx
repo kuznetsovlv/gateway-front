@@ -5,7 +5,6 @@ import { GATEWAY_ROUTE } from 'routes';
 
 const Item = ({ serial, name, onClick }) => (
   <Table.Row
-    key={serial}
     link={`${GATEWAY_ROUTE}?serial=${serial}`}
     title={`Gateway ${name}/${serial}`}
   >

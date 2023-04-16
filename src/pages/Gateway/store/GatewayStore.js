@@ -5,12 +5,12 @@ import { makeAutoObservable, observable } from 'mobx';
 import {
   getGateway,
   getDeviceList,
+  putGateway,
   bind,
   unbind,
   deleteGateway,
   deleteDevice
 } from 'api';
-import { numIPToStrIp } from 'utils';
 
 /**
  * @param serial
@@ -78,6 +78,7 @@ export default class GatewayStore {
     this.deleteDevice = this.deleteDevice.bind(this);
     this.bindDevices = this.bindDevices.bind(this);
     this.unbindDevices = this.unbindDevices.bind(this);
+    this.saveData = this.saveData.bind(this);
 
     this.$fetch();
   }
@@ -100,10 +101,10 @@ export default class GatewayStore {
 
   /**
    * @public
-   * @return {string|null}
+   * @return {number}
    */
   get ip() {
-    return numIPToStrIp(this.$ip);
+    return this.$ip;
   }
 
   /**
@@ -148,6 +149,7 @@ export default class GatewayStore {
       deviceEntries.forEach(({ uid, vendor }) =>
         this.$deviceNameMap.set(uid, vendor)
       );
+      this.$deviceList = observable(deviceEntries.map(({ uid }) => uid));
     } catch (error) {
       this.$errorProcessor.putError(error);
     }
@@ -182,6 +184,7 @@ export default class GatewayStore {
       this.$deviceNameMap.clear();
 
       list.forEach(({ uid, vendor }) => this.$deviceNameMap.set(uid, vendor));
+      this.$deviceList = observable(list.map(({ uid }) => uid));
     } catch (error) {
       this.$errorProcessor.putError(error);
     }
@@ -273,5 +276,38 @@ export default class GatewayStore {
     }
 
     this.$loading = false;
+  }
+
+  /**
+   * @public
+   * @param {{name?: string, ip?: number, devices?: number[]}} data
+   * @return {Generator<Promise<string>, void, *>}
+   */
+  *saveData(data) {
+    // This method isn't called whet I try destructure a data object immediately in the arguments.
+    const { name, ip, devices } = data;
+    if (this.$loading) {
+      return;
+    }
+
+    this.$loading = true;
+
+    try {
+      const serial = yield putGateway({
+        serial: this.$serial,
+        name: name || this.$name,
+        ip: ip ?? this.$ip,
+        devices: devices ?? this.$deviceList
+      });
+
+      if (serial !== this.$serial) {
+        throw new Error('Gateway saving error.');
+      }
+
+      this.$fetch();
+    } catch (error) {
+      this.$errorProcessor.putError(error);
+      this.$loading = false;
+    }
   }
 }

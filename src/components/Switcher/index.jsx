@@ -7,7 +7,6 @@ import styles from './Switcher.module.scss';
 
 const Switcher = ({ className, checked, onLabel, offLabel, onChange }) => {
   const id = useRef(v4());
-  console.log(checked);
 
   return (
     <>

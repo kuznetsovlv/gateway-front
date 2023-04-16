@@ -1,0 +1,1 @@
+export const MAX_DEVICES_PER_GATEWAY = 10;

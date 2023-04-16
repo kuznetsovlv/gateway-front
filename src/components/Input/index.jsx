@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, memo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
@@ -47,6 +47,8 @@ const Input = memo(
       () => (required ? [requiredValidator, ...validators] : validators),
       [...validators, required]
     );
+
+    useEffect(() => setValid({ valid: true }), [value]);
 
     return (
       <div className={clsx(styles.root, className)}>

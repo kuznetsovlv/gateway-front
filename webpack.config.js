@@ -57,6 +57,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       api: resolve(__dirname, 'src', 'api'),
+      globalConstants: resolve(__dirname, 'src', 'constants'),
       components: resolve(__dirname, 'src', 'components'),
       pages: resolve(__dirname, 'src', 'pages'),
       utils: resolve(__dirname, 'src', 'utils'),
