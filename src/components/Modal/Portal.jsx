@@ -14,8 +14,11 @@ const Portal = ({ children }) => {
 
     setPortal(portal);
 
-    return () => document.body.remove(portal);
-  }, []);
+    return () => {
+      portal.remove();
+      setPortal(null);
+    };
+  }, [document?.body]);
 
   return portal ? createPortal(children, portal) : null;
 };
