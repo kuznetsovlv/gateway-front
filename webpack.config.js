@@ -31,7 +31,9 @@ module.exports = {
   devtool: development ? 'source-map' : undefined,
   context: resolve(__dirname, 'src'),
   entry: ['@babel/polyfill', './index.jsx'],
+  watch: development,
   output: {
+    chunkFilename: '[name].[contenthash].js',
     filename: '[name].[contenthash].js',
     path: resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -41,10 +43,15 @@ module.exports = {
   devServer: {
     port: 8080,
     open: development,
-    hot: development,
+    hot: false,
     historyApiFallback: true,
     client: { logging: 'warn', progress: development },
-    proxy: { '/api/v1/': 'http://localhost:8000' }
+    proxy: { '/api/v1/': 'http://localhost:8000' },
+    liveReload: development
+  },
+  watchOptions: {
+    aggregateTimeout: 200,
+    poll: 500
   },
   resolve: {
     extensions: ['.js', '.jsx'],
