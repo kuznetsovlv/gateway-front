@@ -13,7 +13,10 @@ const Item = ({ serial, name, onClick }) => (
     <Table.Cell>{serial}</Table.Cell>
     <Table.Cell align="right">
       <DeleteButton
-        onClick={useCallback(() => onClick(serial), [serial, onClick])}
+        onClick={useCallback(
+          () => onClick({ serial, name, open: true }),
+          [serial, name, onClick]
+        )}
       />
     </Table.Cell>
   </Table.Row>
