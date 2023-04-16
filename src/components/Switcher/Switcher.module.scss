@@ -1,0 +1,68 @@
+$radius: 15px;
+$height: 2 * $radius;
+
+.input {
+  display: none;
+}
+
+.label {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: $height;
+  border-radius: $radius;
+  padding: 0;
+  margin: 5px 0;
+
+  border-width: 1px;
+  border-style: solid;
+
+  .key {
+    height: $height;
+    width: $height;
+    border-radius: $radius;
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  .text {
+    height: $height;
+    line-height: $height;
+    padding: 0 5px;
+    font-size: 1rem;
+    user-select: none;
+
+  }
+
+  &.checked {
+    flex-direction: row-reverse;
+    border-color: #003200;
+    background: #0f0;
+
+    .key {
+      border-color: #003300;
+      background: #0a0;
+    }
+
+    .text {
+      color: #003300;
+    }
+  }
+
+  &.unchecked {
+    flex-direction: row;
+    border-color: #333;
+    background: #ccc;
+  }
+
+  .key {
+    border-color: #444;
+    background: #aaa;
+  }
+
+  .text {
+    color: #333;
+  }
+}

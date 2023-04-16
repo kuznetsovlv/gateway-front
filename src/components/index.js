@@ -8,4 +8,5 @@ export Lazy from './Lazy/lazy';
 export Loader from './Loader';
 export Modal from './Modal';
 export Page from './Page';
+export Switcher from './Switcher';
 export Table from './Table';
