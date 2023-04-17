@@ -43,6 +43,11 @@ $header_height: 30px;
 
     .main {
       padding: 5px;
+      &.loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     .footer {

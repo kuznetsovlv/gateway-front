@@ -13,11 +13,17 @@ const PortedModal = props => (
 PortedModal.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.node),
   children: PropTypes.node.isRequired,
+  loading: PropTypes.bool,
   open: PropTypes.bool,
   title: PropTypes.string,
   onClose: PropTypes.func.isRequired
 };
 
-PortedModal.defaultProps = { actions: [], open: false, title: null };
+PortedModal.defaultProps = {
+  actions: [],
+  open: false,
+  loading: false,
+  title: null
+};
 
 export default PortedModal;

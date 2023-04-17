@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 
-import { CloseButton } from 'components';
+import CloseButton from '../CloseButton';
+import Loader from '../Loader';
 import styles from './Modal.module.scss';
 
 const blockPropagation = event => event.stopPropagation();
 
-const Modal = ({ actions, children, open, title, onClose }) =>
+const Modal = ({ actions, children, open, loading, title, onClose }) =>
   open ? (
     <div className={styles.root} onClick={onClose}>
       <div className={styles.window} onClick={blockPropagation}>
@@ -14,8 +16,10 @@ const Modal = ({ actions, children, open, title, onClose }) =>
           <h2 className={styles.title}>{title}</h2>
           <CloseButton onClick={onClose} />
         </header>
-        <main className={styles.main}>{children}</main>
-        {!!actions.length && (
+        <main className={clsx(styles.main, { [styles.loading]: loading })}>
+          {loading ? <Loader /> : children}
+        </main>
+        {!loading && !!actions.length && (
           <footer className={styles.footer}>{actions}</footer>
         )}
       </div>
@@ -25,6 +29,7 @@ const Modal = ({ actions, children, open, title, onClose }) =>
 Modal.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.node).isRequired,
   children: PropTypes.node.isRequired,
+  loading: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
   title: PropTypes.string,
   onClose: PropTypes.func.isRequired
