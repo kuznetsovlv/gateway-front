@@ -1,5 +1,4 @@
 import 'types';
-import 'StoreProvider';
 import { makeAutoObservable, observable } from 'mobx';
 
 import './GatewayStore';
