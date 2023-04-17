@@ -45,7 +45,7 @@ export const deleteGateway = serial =>
   fetchDelete(PATH.GATEWAY, { data: { serial } });
 
 /**
- * @param {string} serial
+ * @param {string} [serial]
  * @return {Promise<SimpleDevice[]>}
  */
 export const getDeviceList = serial => {
