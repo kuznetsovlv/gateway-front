@@ -2,8 +2,7 @@ import React, { useState, memo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { putGateway } from 'api';
-import { Page, Input, IPInput, Button } from 'components';
-import styles from './CreateGateway.module.scss';
+import { Page, Gateway } from 'components';
 
 const CreateGateway = memo(() => {
   // eslint-disable-next-line no-unused-vars
@@ -14,25 +13,13 @@ const CreateGateway = memo(() => {
 
   return (
     <Page title="Create New Gateway" loading={loading}>
-      <Input
-        label="Name"
-        value={name}
-        placeholder="Gateway's name"
-        required
-        onChange={setName}
-      />
-      <IPInput
-        label="IP"
-        value={ip}
-        placeholder="Gateway's ip"
-        required
-        onChange={setIp}
-      />
-      <Button
-        className={styles.submit}
-        type="submit"
-        disabled={ip === null || !name}
-        onClick={() => {
+      <Gateway
+        name={name}
+        ip={ip}
+        saveDisabled={ip === null || !name}
+        onNameChange={setName}
+        onIPChange={setIp}
+        onSave={() => {
           setLoading(true);
           putGateway({ name, ip }).then(
             serial => {
@@ -42,9 +29,7 @@ const CreateGateway = memo(() => {
             () => setLoading(false)
           );
         }}
-      >
-        Create
-      </Button>
+      />
     </Page>
   );
 });

@@ -6,16 +6,14 @@ import { MAX_DEVICES_PER_GATEWAY } from 'globalConstants';
 import {
   Page,
   Switcher,
-  Input,
-  IPInput,
-  Button,
   Table,
-  AddButton
+  AddButton,
+  Gateway as GatewayComponent
 } from 'components';
 import GatewayStore from '../store/GatewayStore';
 import DeviceItem from './DeviceItem';
 import DeviceList from './DeviceList';
-import styles from './GateWay.module.scss';
+import styles from './Gateway.module.scss';
 
 const Gateway = observer(({ data }) => {
   const [{ uid, vendor, open }, setOpenConfirmation] = useState({
@@ -33,8 +31,6 @@ const Gateway = observer(({ data }) => {
 
   const changed = data.name !== name || data.ip !== ip;
 
-  const submitDisabled = disabled || !changed || !name || ip === null;
-
   console.log(open, uid, vendor);
 
   return (
@@ -45,33 +41,18 @@ const Gateway = observer(({ data }) => {
         onLabel="Edit"
         onChange={setDisabled}
       />
-      <Input
-        label="Name"
+      <GatewayComponent
+        name={disabled ? data.name : name}
+        ip={disabled ? data.ip : ip}
         disabled={disabled}
-        value={disabled ? data.name : name}
-        placeholder="Gateway's name"
-        required
-        onChange={setName}
-      />
-      <IPInput
-        label="IP"
-        disabled={disabled}
-        value={disabled ? data.ip : ip}
-        placeholder="Gateway's ip"
-        required
-        onChange={setIp}
-      />
-      <Button
-        className={styles.submit}
-        type="submit"
-        disabled={submitDisabled}
-        onClick={useCallback(() => {
+        saveDisabled={!changed || !name || ip === null}
+        onNameChange={setName}
+        onIPChange={setIp}
+        onSave={useCallback(() => {
           setDisabled(true);
           data.saveData({ name, ip });
         }, [name, ip, data])}
-      >
-        Save
-      </Button>
+      />
 
       <Table className={styles.devices}>
         <Table.Header>
