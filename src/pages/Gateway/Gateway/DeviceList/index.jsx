@@ -1,28 +1,36 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { observer } from 'mobx-react-lite';
 
 import { Modal, Button } from 'components';
+import { useStore, ERROR_PROCESSOR_KEY } from 'StoreProvider';
+import DeviceListStore from './DeviceListStore';
 
-const DeviceList = ({ open, bound, onClose, onSave }) => {
-  const [boundSet, setBoundSet] = useState(new Set(bound));
-  const saveDisabled = useMemo(
-    () => bound.length === boundSet.size && bound.every(boundSet.has),
-    [bound, boundSet]
+const DeviceList = observer(({ open, bound, onClose, onSave }) => {
+  const store = useStore();
+  const dataRef = useRef(
+    new DeviceListStore({
+      bound,
+      errorProcessor: store.get(ERROR_PROCESSOR_KEY)
+    })
   );
+
+  const data = dataRef.current;
 
   return (
     <Modal
+      loading={data.loading}
       open={open}
       title="Device list"
       actions={[
         <Button
           key="apply"
           type="submit"
-          disabled={saveDisabled}
+          disabled={data.saveDisabled}
           onClick={useCallback(() => {
-            onSave(Array.from(boundSet));
+            onSave(data.selected);
             onClose();
-          }, [boundSet])}
+          }, [data])}
         >
           Apply
         </Button>,
@@ -35,7 +43,7 @@ const DeviceList = ({ open, bound, onClose, onSave }) => {
       List
     </Modal>
   );
-};
+});
 
 DeviceList.propTypes = {
   open: PropTypes.bool,
