@@ -1,10 +1,11 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 import { Modal, Button } from 'components';
 import { useStore, ERROR_PROCESSOR_KEY } from 'StoreProvider';
-import DeviceListStore from './DeviceListStore';
+import List from './List';
+import { DeviceListStore } from '../../store';
 
 const DeviceList = observer(({ open, bound, onClose, onSave }) => {
   const store = useStore();
@@ -16,6 +17,12 @@ const DeviceList = observer(({ open, bound, onClose, onSave }) => {
   );
 
   const data = dataRef.current;
+
+  useEffect(() => {
+    if (open) {
+      data.fetchData();
+    }
+  }, [data, open]);
 
   return (
     <Modal
@@ -40,7 +47,7 @@ const DeviceList = observer(({ open, bound, onClose, onSave }) => {
       ]}
       onClose={onClose}
     >
-      List
+      <List data={data} />
     </Modal>
   );
 });

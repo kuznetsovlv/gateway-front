@@ -50,6 +50,9 @@ export default class DeviceListStore {
     this.$list = observable([]);
     this.$deviceMap = observable(new Map());
     this.$loading = false;
+
+    this.fetchData = this.fetchData.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   /**

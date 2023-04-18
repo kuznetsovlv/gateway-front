@@ -58,6 +58,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "clsx": "^1.2.1",
+    "date-fns": "^2.29.3",
     "mobx": "^6.9.0",
     "mobx-react-lite": "^3.4.3",
     "prop-types": "^15.8.1",

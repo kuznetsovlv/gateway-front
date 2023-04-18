@@ -30,7 +30,7 @@ module.exports = {
   target: development ? 'web' : 'browserslist',
   devtool: development ? 'source-map' : undefined,
   context: resolve(__dirname, 'src'),
-  entry: ['@babel/polyfill', './CreateGateway.jsx'],
+  entry: ['@babel/polyfill', './index.jsx'],
   watch: development,
   output: {
     chunkFilename: '[name].[contenthash].js',

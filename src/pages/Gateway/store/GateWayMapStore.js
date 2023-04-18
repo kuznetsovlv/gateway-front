@@ -42,4 +42,12 @@ export default class GateWayMapStore {
   has(serial) {
     return this.$map.has(serial);
   }
+
+  /**
+   * @public
+   * @param {string} serial
+   */
+  delete(serial) {
+    this.$map.delete(serial);
+  }
 }
