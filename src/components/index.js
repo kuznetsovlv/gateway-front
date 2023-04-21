@@ -2,6 +2,7 @@ export AddButton from './AddButton';
 export Button from './Button';
 export CloseButton from './CloseButton';
 export DeleteButton from './DeleteButton';
+export Device from './Device';
 export Gateway from './Gateway';
 export IPInput from './IPInput';
 export Input from './Input';

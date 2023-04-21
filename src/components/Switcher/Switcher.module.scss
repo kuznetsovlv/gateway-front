@@ -37,7 +37,7 @@ $height: 2 * $radius;
   }
 
   &.checked {
-    flex-direction: row-reverse;
+    flex-direction: row;
     border-color: #003200;
     background: #0f0;
 
@@ -52,7 +52,7 @@ $height: 2 * $radius;
   }
 
   &.unchecked {
-    flex-direction: row;
+    flex-direction: row-reverse;
     border-color: #333;
     background: #ccc;
   }
@@ -64,5 +64,9 @@ $height: 2 * $radius;
 
   .text {
     color: #333;
+  }
+
+  .disabled {
+    cursor: default;
   }
 }

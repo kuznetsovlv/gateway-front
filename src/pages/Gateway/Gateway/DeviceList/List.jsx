@@ -10,6 +10,7 @@ import {
   DeviceMapStore,
   DEVICE_MAP_STORE_KEY
 } from '../../store';
+import DeviceEditor from './DeviceEditor';
 
 /**
  * @param {number} [uid]
@@ -77,7 +78,7 @@ const List = observer(({ data }) => {
         ]}
         onClose={handleDeviceWindowClose}
       >
-        Device
+        <DeviceEditor data={device} />
       </Modal>
     </>
   );

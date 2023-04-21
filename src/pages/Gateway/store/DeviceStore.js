@@ -1,7 +1,6 @@
 import 'types';
 import 'StoreProvider';
 import { makeAutoObservable } from 'mobx';
-import { fromUnixTime, format } from 'date-fns';
 
 import { getDevice, putDevice } from 'api';
 
@@ -23,7 +22,7 @@ export default class DeviceStore {
   $dateCreated;
   /**
    * @private
-   * @type {Status|null}
+   * @type {Status}
    */
   $status;
   /**
@@ -44,9 +43,9 @@ export default class DeviceStore {
   constructor({ uid = null, errorProcessor }) {
     makeAutoObservable(this);
     this.$uid = uid;
-    this.$vendor = null;
+    this.$vendor = '';
     this.$dateCreated = null;
-    this.$status = null;
+    this.$status = 'offline';
     this.$loadin = false;
     this.$errorProcessor = errorProcessor;
 
@@ -92,7 +91,7 @@ export default class DeviceStore {
 
   /**
    * @public
-   * @return {Status|null}
+   * @return {Status}
    */
   get status() {
     return this.$status;

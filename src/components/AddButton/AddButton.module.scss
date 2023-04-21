@@ -1,9 +1,6 @@
-$link_height: 50px;
-
+@import "src/mixin";
 .root {
-  width: 100%;
-  height: $link_height;
-  line-height: $link_height;
+  @include big-button;
 
   .plus {
     font-size: 1.5em;

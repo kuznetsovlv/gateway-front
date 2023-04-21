@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Input, IPInput } from 'components';
+
+import Button from '../Button';
+import Input from '../Input';
+import IPInput from '../IPInput';
 import styles from './Gateway.module.scss';
 
 const Gateway = ({

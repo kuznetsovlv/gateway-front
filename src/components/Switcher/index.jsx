@@ -5,19 +5,27 @@ import { v4 } from 'uuid';
 
 import styles from './Switcher.module.scss';
 
-const Switcher = ({ className, checked, onLabel, offLabel, onChange }) => {
+const Switcher = ({
+  className,
+  checked,
+  disabled,
+  onLabel,
+  offLabel,
+  onChange
+}) => {
   const id = useRef(v4());
 
   return (
     <>
       <input
         className={styles.input}
+        disabled={disabled}
         name={id.current}
         id={id.current}
         type="checkbox"
         checked={checked}
         onChange={useCallback(
-          ({ target: { checked } }) => onChange(!checked),
+          ({ target: { checked } }) => onChange(checked),
           [onChange]
         )}
       />
@@ -25,7 +33,11 @@ const Switcher = ({ className, checked, onLabel, offLabel, onChange }) => {
         htmlFor={id.current}
         className={clsx(
           styles.label,
-          { [styles.checked]: checked, [styles.unchecked]: !checked },
+          {
+            [styles.checked]: checked,
+            [styles.unchecked]: !checked,
+            [styles.disabled]: disabled
+          },
           className
         )}
       >
@@ -39,6 +51,7 @@ const Switcher = ({ className, checked, onLabel, offLabel, onChange }) => {
 Switcher.ptopTypes = {
   className: PropTypes.string,
   checked: PropTypes.bool,
+  disabled: PropTypes.bool,
   onLabel: PropTypes.string,
   offLabel: PropTypes.string,
   onChange: PropTypes.func.isRequired
@@ -47,6 +60,7 @@ Switcher.ptopTypes = {
 Switcher.defaultProps = {
   className: null,
   checked: false,
+  disabled: false,
   onLabel: null,
   offLabel: null
 };

@@ -20,9 +20,11 @@ const Gateway = observer(({ data }) => {
     open: false
   });
   const [openAdd, setOpenAdd] = useState(false);
-  const [disabled, setDisabled] = useState(true);
+  const [enabled, setEnabled] = useState(false);
   const [name, setName] = useState(data.name);
   const [ip, setIp] = useState(data.ip);
+
+  const disabled = !enabled;
 
   useEffect(() => {
     setName(data.name);
@@ -37,9 +39,9 @@ const Gateway = observer(({ data }) => {
     <Page loading={data.loading} title={`Gateway ${data.name}`}>
       <Switcher
         className={styles.switcher}
-        checked={!disabled}
+        checked={enabled}
         onLabel="Edit"
-        onChange={setDisabled}
+        onChange={setEnabled}
       />
       <GatewayComponent
         name={disabled ? data.name : name}
@@ -49,7 +51,7 @@ const Gateway = observer(({ data }) => {
         onNameChange={setName}
         onIPChange={setIp}
         onSave={useCallback(() => {
-          setDisabled(true);
+          setEnabled(true);
           data.saveData({ name, ip });
         }, [name, ip, data])}
       />

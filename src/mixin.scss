@@ -1,0 +1,11 @@
+$button_height: 50px;
+
+@mixin big-button {
+  width: 100%;
+  height: $button_height;
+  line-height: $button_height;
+}
+
+@mixin disabled-switcher {
+  width: 70px;
+}
