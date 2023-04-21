@@ -84,12 +84,10 @@ export default class DeviceStore {
 
   /**
    * @public
-   * @return {null|string}
+   * @return {number|null}
    */
   get dateCreated() {
-    return this.$dateCreated === null
-      ? null
-      : format(fromUnixTime(this.$dateCreated), 'yyyy-MMM-dd HH:mm:ss');
+    return this.$dateCreated;
   }
 
   /**
