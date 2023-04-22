@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
+import Icon from 'icon';
 import Button from '../Button';
 import styles from './AddButton.module.scss';
 
@@ -13,7 +14,7 @@ const AddButton = memo(({ className, disabled, to, text, onClick }) => (
     type="add"
     onClick={onClick}
   >
-    <span className={styles.plus}>+</span>{' '}
+    <Icon name="plus" type="add" disabled={disabled} />{' '}
     <span className={styles.text}>{text}</span>
   </Button>
 ));

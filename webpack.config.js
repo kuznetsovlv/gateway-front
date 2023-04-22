@@ -63,7 +63,8 @@ module.exports = {
       utils: resolve(__dirname, 'src', 'utils'),
       types: resolve(__dirname, 'src', 'types'),
       StoreProvider: resolve(__dirname, 'src', 'StoreProvider'),
-      routes: resolve(__dirname, 'src', 'routes.js')
+      routes: resolve(__dirname, 'src', 'routes.js'),
+      icon: resolve(__dirname, 'src', 'icon')
     }
   },
   optimization: {

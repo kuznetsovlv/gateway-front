@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
@@ -14,40 +14,46 @@ import DeviceEditor from './DeviceEditor';
 
 /**
  * @param {number} [uid]
+ * @param {React.Ref<DeviceStore|null>} deviceRef
  * @return {DeviceStore}
  */
-const useDevice = uid => {
+const useDevice = (uid, deviceRef) => {
   const store = useStore();
 
-  if (!store.has(DEVICE_MAP_STORE_KEY)) {
-    store.set(DEVICE_MAP_STORE_KEY, new DeviceMapStore());
+  if (!deviceRef.current) {
+    if (!store.has(DEVICE_MAP_STORE_KEY)) {
+      store.set(DEVICE_MAP_STORE_KEY, new DeviceMapStore());
+    }
+
+    const map = store.get(DEVICE_MAP_STORE_KEY);
+
+    deviceRef.current =
+      uid && map.has(uid)
+        ? map.get(uid)
+        : new DeviceStore({
+            uid,
+            errorProcessor: store.get(ERROR_PROCESSOR_KEY)
+          });
+
+    if (uid && !map.has(uid)) {
+      map.set(uid, deviceRef.current);
+    }
   }
 
-  const map = store.get(DEVICE_MAP_STORE_KEY);
-
-  const device =
-    uid && map.has(uid)
-      ? map.get(uid)
-      : new DeviceStore({
-          uid,
-          errorProcessor: store.get(ERROR_PROCESSOR_KEY)
-        });
-
-  if (uid && !map.has(uid)) {
-    map.set(uid, device);
-  }
-
-  return device;
+  return deviceRef.current;
 };
 
 const List = observer(({ data }) => {
+  const deviceRef = useRef(null);
   const [{ open, uid }, setOpenDevice] = useState({ open: false });
-  const handleDeviceWindowClose = useCallback(
-    () => setOpenDevice({ open: false }),
-    []
-  );
+  const handleDeviceWindowClose = useCallback(() => {
+    setOpenDevice({ open: false });
+    deviceRef.current = null;
+  }, []);
 
-  const device = useDevice(uid);
+  console.log(data.list);
+
+  const device = useDevice(uid, deviceRef);
 
   return (
     <>
@@ -61,14 +67,20 @@ const List = observer(({ data }) => {
         open={open}
         loading={device.loading}
         title={
-          uid ? `Device ${device.vendor ?? device.uid}` : 'Creation new device'
+          uid
+            ? `Device ${device.originalVendor ?? device.uid}`
+            : 'Creation new device'
         }
         actions={[
           <Button
             key="save"
             type="submit"
-            disabled={data.saveDisabled}
-            onClick={device.save}
+            disabled={device.saveDisabled}
+            onClick={useCallback(() => {
+              device.save();
+              data.fetchData();
+              handleDeviceWindowClose();
+            }, [data, device])}
           >
             Save
           </Button>,

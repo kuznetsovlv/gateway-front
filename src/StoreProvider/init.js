@@ -21,6 +21,12 @@ export default errorProcessor => {
         const { status, statusText = `Request ${response.url} failed.` } =
           response;
 
+        if (response.headers.get('Content-Type') === 'application/json') {
+          return response.json().then(({ message = statusText }) => {
+            throw new Error(`Status code ${status}: ${message}`);
+          });
+        }
+
         throw new Error(`Status code ${status}: ${statusText}`);
       })(...args).then(toCamelCaseProps, errorProcessor.putError);
     };

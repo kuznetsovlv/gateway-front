@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
+import Icon from 'icon';
 import Button from '../Button';
 import styles from './CloseButton.module.scss';
 
@@ -20,8 +21,7 @@ const CloseButton = ({ className, type, disabled, ...props }) => (
     disabled={disabled}
     circled
   >
-    <div />
-    <div />
+    <Icon name="cross" disabled={disabled} type={type} />
   </Button>
 );
 

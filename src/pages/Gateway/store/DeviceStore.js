@@ -12,9 +12,14 @@ export default class DeviceStore {
   $uid;
   /**
    * @private
-   * @type {string|null}
+   * @type {string}
    */
   $vendor;
+  /**
+   * @private
+   * @type {string}
+   */
+  $editedVendor;
   /**
    * @private
    * @type {number|null}
@@ -27,9 +32,19 @@ export default class DeviceStore {
   $status;
   /**
    * @private
+   * @type {Status}
+   */
+  $editedStatus;
+  /**
+   * @private
    * @type {boolean}
    */
-  $loadin;
+  $loading;
+  /**
+   * @private
+   * @type {boolean}
+   */
+  $forceFetch;
   /**
    * @private
    * @type {ErrorProcessor}
@@ -41,12 +56,14 @@ export default class DeviceStore {
    * @param {ErrorProcessor} errorProcessor
    */
   constructor({ uid = null, errorProcessor }) {
+    console.log('Create');
     makeAutoObservable(this);
     this.$uid = uid;
-    this.$vendor = '';
+    this.$vendor = this.$editedVendor = '';
     this.$dateCreated = null;
-    this.$status = 'offline';
-    this.$loadin = false;
+    this.$status = this.$editedStatus = 'offline';
+    this.$loading = false;
+    this.$forceFetch = false;
     this.$errorProcessor = errorProcessor;
 
     this.fetchData = this.fetchData.bind(this);
@@ -67,10 +84,18 @@ export default class DeviceStore {
 
   /**
    * @public
+   * @return {string}
+   */
+  get originalVendor() {
+    return this.$vendor;
+  }
+
+  /**
+   * @public
    * @return {string|null}
    */
   get vendor() {
-    return this.$vendor;
+    return this.$editedVendor ?? this.$vendor;
   }
 
   /**
@@ -78,7 +103,7 @@ export default class DeviceStore {
    * @param {string} vendor
    */
   set vendor(vendor) {
-    this.$vendor = vendor;
+    this.$editedVendor = vendor;
   }
 
   /**
@@ -93,8 +118,16 @@ export default class DeviceStore {
    * @public
    * @return {Status}
    */
-  get status() {
+  get originalStatus() {
     return this.$status;
+  }
+
+  /**
+   * @public
+   * @return {Status}
+   */
+  get status() {
+    return this.$editedStatus ?? this.$status;
   }
 
   /**
@@ -102,7 +135,7 @@ export default class DeviceStore {
    * @param {Status} status
    */
   set status(status) {
-    this.$status = status;
+    this.$editedStatus = status;
   }
 
   /**
@@ -110,7 +143,19 @@ export default class DeviceStore {
    * @return {boolean}
    */
   get loading() {
-    return this.$loadin;
+    return this.$loading;
+  }
+
+  /**
+   * @public
+   * @return {boolean}
+   */
+  get saveDisabled() {
+    return (
+      !this.$editedVendor ||
+      (this.$editedVendor === this.$vendor &&
+        this.$editedStatus === this.$status)
+    );
   }
 
   /**
@@ -118,11 +163,11 @@ export default class DeviceStore {
    * @return {Generator<Promise<Device>, void, *>}
    */
   *fetchData() {
-    if (this.$loadin || !this.$uid) {
+    if (!this.$forceFetch && (this.$loading || !this.$uid)) {
       return;
     }
 
-    this.$loadin = true;
+    this.$loading = true;
 
     try {
       const { uid, vendor, status, date_created } = yield getDevice(this.$uid);
@@ -131,14 +176,15 @@ export default class DeviceStore {
         throw new Error('Loading device data failed');
       }
 
-      this.$vendor = vendor;
+      this.$vendor = this.$editedVendor = vendor;
       this.$dateCreated = date_created;
-      this.$status = status;
+      this.$status = this.$editedStatus = status;
     } catch (error) {
       this.$errorProcessor.putError(error);
     }
 
-    this.$loadin = false;
+    this.$forceFetch = false;
+    this.$loading = false;
   }
 
   /**
@@ -146,14 +192,14 @@ export default class DeviceStore {
    * @return {Generator<Promise<number>, void, *>}
    */
   *save() {
-    if (this.$loadin) {
+    if (this.$loading || this.saveDisabled) {
       return;
     }
 
-    this.$loadin = true;
+    this.$loading = true;
 
     try {
-      const data = { vendor: this.$vendor, status: this.$status };
+      const data = { vendor: this.$editedVendor, status: this.$editedStatus };
       if (this.$uid) {
         data.uid = this.uid;
       }
@@ -164,10 +210,11 @@ export default class DeviceStore {
       } else if (this.$uid !== uid) {
         throw new Error('Saving device data error');
       }
+      this.$forceFetch = true;
+      this.fetchData();
     } catch (error) {
       this.$errorProcessor.putError(error);
+      this.$loading = false;
     }
-
-    this.$loadin = false;
   }
 }

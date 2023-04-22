@@ -58,21 +58,21 @@ export const getDeviceList = serial => {
 };
 
 /**
- * @param {number} uuid
+ * @param {number} uid
  * @return {Promise<Device>}
  */
-export const getDevice = uuid => fetchGet(PATH.DEVICE, { data: { uuid } });
+export const getDevice = uid => fetchGet(PATH.DEVICE, { data: { uid } });
 
 /**
- * @param {number} [uuid]
+ * @param {number} [uid]
  * @param {string} [vendor]
  * @param {Status} [status]
  * @return {Promise<number>}
  */
-export const putDevice = ({ uuid, vendor, status }) => {
+export const putDevice = ({ uid, vendor, status }) => {
   const data = {};
-  if (uuid) {
-    data.uuid = uuid;
+  if (uid) {
+    data.uid = uid;
   }
 
   if (vendor) {
@@ -83,15 +83,14 @@ export const putDevice = ({ uuid, vendor, status }) => {
     data.status = status;
   }
 
-  return fetchPut(PATH.DEVICE, { data }).then(({ uuid }) => uuid);
+  return fetchPut(PATH.DEVICE, { data }).then(({ uid }) => uid);
 };
 
 /**
- * @param {number} uuid
+ * @param {number} uid
  * @return {Promise<void>}
  */
-export const deleteDevice = uuid =>
-  fetchDelete(PATH.DEVICE, { data: { uuid } });
+export const deleteDevice = uid => fetchDelete(PATH.DEVICE, { data: { uid } });
 
 /**
  * @param {string} serial
