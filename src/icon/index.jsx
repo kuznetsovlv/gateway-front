@@ -7,6 +7,8 @@ import MinusIcon from './MinusIcon';
 import OutIcon from './OutIcon';
 import PlusIcon from './PlusIcon';
 
+//All icons got from https://www.flaticon.com/uicons/interface-icons
+
 const Icon = ({ name, ...props }) => {
   switch (name) {
     case 'cross':
