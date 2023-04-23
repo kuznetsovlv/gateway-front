@@ -7,6 +7,7 @@ const DeleteDeviceConfirmation = ({ open, uid, vendor, onDelete, onClose }) => (
   <Modal
     open={open && !!uid && !!vendor}
     title="Delete Device Conversation"
+    zIndex={20}
     actions={[
       <Button
         key="delete"

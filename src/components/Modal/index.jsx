@@ -16,6 +16,7 @@ PortedModal.propTypes = {
   loading: PropTypes.bool,
   open: PropTypes.bool,
   title: PropTypes.string,
+  zIndex: PropTypes.number,
   onClose: PropTypes.func.isRequired
 };
 
@@ -23,7 +24,8 @@ PortedModal.defaultProps = {
   actions: [],
   open: false,
   loading: false,
-  title: null
+  title: null,
+  zIndex: 10
 };
 
 export default PortedModal;
