@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
@@ -21,11 +21,20 @@ const Button = memo(
       className
     );
 
+    const handleClick = useCallback(
+      event => {
+        event.preventDefault();
+        event.stopPropagation();
+        onClick();
+      },
+      [onClick]
+    );
+
     return link && !disabled ? (
       <Link
         className={clsx(styles.root, className)}
         to={link}
-        onClick={onClick}
+        onClick={handleClick}
       >
         {children}
       </Link>
@@ -34,7 +43,7 @@ const Button = memo(
         className={className}
         type={type === 'submit' ? 'submit' : 'button'}
         disabled={disabled}
-        onClick={onClick}
+        onClick={handleClick}
       >
         {children}
       </button>

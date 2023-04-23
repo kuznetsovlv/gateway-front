@@ -9,7 +9,7 @@ const DeviceItem = ({
   vendor,
   selected,
   selectDisabled,
-  deleteDisabled,
+  editDisabled,
   onSelect,
   onEdit,
   onDelete
@@ -29,14 +29,15 @@ const DeviceItem = ({
       <Button
         type="ghost"
         circled
+        disabled={editDisabled}
         onClick={useCallback(() => onEdit({ open: true, uid }), [uid, onEdit])}
       >
-        <Icon name="edit" />
+        <Icon name="edit" disabled={editDisabled} />
       </Button>
     </Table.Cell>
     <Table.Cell>
       <DeleteButton
-        disabled={deleteDisabled}
+        disabled={editDisabled}
         onClick={useCallback(
           () => onDelete({ open: true, uid, vendor }),
           [uid, vendor, onDelete]
@@ -51,7 +52,7 @@ DeviceItem.propTypes = {
   vendor: PropTypes.string.isRequired,
   selected: PropTypes.bool.isRequired,
   selectDisabled: PropTypes.bool.isRequired,
-  deleteDisabled: PropTypes.bool.isRequired,
+  editDisabled: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired

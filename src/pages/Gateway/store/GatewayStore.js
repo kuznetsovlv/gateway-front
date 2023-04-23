@@ -286,12 +286,13 @@ export default class GatewayStore {
 
     try {
       yield unbind(this.$serial, uids);
-      this.$forceFetch = true;
-      this.fetchDeviceList();
+      for (const uid of uids) {
+        this.$removeDevise(uid);
+      }
     } catch (error) {
       this.$errorProcessor.putError(error);
-      this.$loading = false;
     }
+    this.$loading = false;
   }
 
   /**

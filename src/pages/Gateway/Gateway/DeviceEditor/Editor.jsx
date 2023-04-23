@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
 import { Device, Switcher } from 'components';
-import { DeviceStore } from '../../../store';
-import styles from './DeviceEditor.module.scss';
+import { DeviceStore } from '../../store';
+import styles from './Editor.module.scss';
 
-const DeviceEditor = observer(({ data }) => {
+const Editor = observer(({ data }) => {
   const [enabled, setEnabled] = useState(!data.uid);
   const disabled = !enabled;
 
@@ -33,6 +33,6 @@ const DeviceEditor = observer(({ data }) => {
   );
 });
 
-DeviceEditor.propTypes = { data: PropTypes.instanceOf(DeviceStore).isRequired };
+Editor.propTypes = { data: PropTypes.instanceOf(DeviceStore).isRequired };
 
-export default DeviceEditor;
+export default Editor;

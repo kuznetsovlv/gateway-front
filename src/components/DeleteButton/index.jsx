@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from 'icon';
@@ -11,14 +11,7 @@ const DeleteButton = ({ disabled, onClick }) => (
     circled
     disabled={disabled}
     type="delete"
-    onClick={useCallback(
-      event => {
-        event.preventDefault();
-        event.stopPropagation();
-        onClick();
-      },
-      [onClick]
-    )}
+    onClick={onClick}
   >
     <Icon name="minus" disabled={disabled} type="delete" />
   </Button>

@@ -1,58 +1,17 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
-import { AddButton, Modal, Button, Table } from 'components';
-import { useStore, ERROR_PROCESSOR_KEY } from 'StoreProvider';
-import {
-  DeviceListStore,
-  DeviceStore,
-  DeviceMapStore,
-  DEVICE_MAP_STORE_KEY
-} from '../../store';
-import DeviceEditor from './DeviceEditor';
+import { AddButton, Table } from 'components';
+import { DeviceListStore } from '../../store';
+import DeviceEditor from '../DeviceEditor';
 import DeviceItem from './DeviceItem';
-
-const useDevice = (uid, open) => {
-  const deviceRef = useRef(null);
-  const store = useStore();
-
-  if (open) {
-    if (!deviceRef.current) {
-      if (!store.has(DEVICE_MAP_STORE_KEY)) {
-        store.set(DEVICE_MAP_STORE_KEY, new DeviceMapStore());
-      }
-
-      const map = store.get(DEVICE_MAP_STORE_KEY);
-
-      console.log(uid, map.has(uid));
-
-      deviceRef.current =
-        uid && map.has(uid)
-          ? map.get(uid)
-          : new DeviceStore({
-              uid,
-              errorProcessor: store.get(ERROR_PROCESSOR_KEY)
-            });
-
-      if (uid && !map.has(uid)) {
-        map.set(uid, deviceRef.current);
-      }
-    }
-  } else {
-    deviceRef.current = null;
-  }
-
-  return deviceRef.current;
-};
 
 const List = observer(({ data, onDelete }) => {
   const [{ open, uid }, setOpenDevice] = useState({ open: false });
   const handleDeviceWindowClose = useCallback(() => {
     setOpenDevice({ open: false });
   }, []);
-
-  const device = useDevice(uid, open);
 
   return (
     <>
@@ -72,7 +31,7 @@ const List = observer(({ data, onDelete }) => {
               selectDisabled={disabled}
               vendor={vendor}
               selected={selected}
-              deleteDisabled={bound}
+              editDisabled={bound}
               onSelect={data.select}
               onEdit={setOpenDevice}
               onDelete={onDelete}
@@ -85,35 +44,13 @@ const List = observer(({ data, onDelete }) => {
         disabled={open}
         onClick={useCallback(() => setOpenDevice({ open: true }), [])}
       />
-      <Modal
-        open={open && !!device}
-        loading={open && !!device?.loading}
-        title={
-          uid
-            ? `Device ${device.originalVendor ?? device.uid}`
-            : 'Creation new device'
-        }
-        actions={[
-          <Button
-            key="save"
-            type="submit"
-            disabled={!!device?.saveDisabled}
-            onClick={useCallback(() => {
-              device?.save();
-              data.fetchData();
-              handleDeviceWindowClose();
-            }, [data, device])}
-          >
-            Save
-          </Button>,
-          <Button key="cancel" onClick={handleDeviceWindowClose}>
-            Cancel
-          </Button>
-        ]}
+
+      <DeviceEditor
+        open={open}
+        uid={uid}
+        onAfterSave={data.fetchData}
         onClose={handleDeviceWindowClose}
-      >
-        {device ? <DeviceEditor data={device} /> : <></>}
-      </Modal>
+      />
     </>
   );
 });
