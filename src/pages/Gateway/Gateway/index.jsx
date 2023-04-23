@@ -45,9 +45,6 @@ const Gateway = observer(({ data }) => {
 
   const changed = data.name !== name || data.ip !== ip;
 
-  console.log(unbindOpen, unbindUid, unbindVendor);
-  console.log(deleteOpen, deleteUid, deleteVendor);
-
   return (
     <>
       <Page loading={data.loading} title={`Gateway ${data.name}`}>

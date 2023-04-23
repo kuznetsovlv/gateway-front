@@ -56,7 +56,6 @@ export default class DeviceStore {
    * @param {ErrorProcessor} errorProcessor
    */
   constructor({ uid = null, errorProcessor }) {
-    console.log('Create');
     makeAutoObservable(this);
     this.$uid = uid;
     this.$vendor = this.$editedVendor = '';

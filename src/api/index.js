@@ -90,8 +90,7 @@ export const putDevice = ({ uid, vendor, status }) => {
  * @param {number} uid
  * @return {Promise<void>}
  */
-export const deleteDevice = uid =>
-  console.log(uid) ?? fetchDelete(PATH.DEVICE, { data: { uid } });
+export const deleteDevice = uid => fetchDelete(PATH.DEVICE, { data: { uid } });
 
 /**
  * @param {string} serial
