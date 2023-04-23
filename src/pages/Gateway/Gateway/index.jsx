@@ -16,7 +16,10 @@ import DeviceList from './DeviceList';
 import styles from './Gateway.module.scss';
 
 const Gateway = observer(({ data }) => {
-  const [{ uid, vendor, open }, setOpenConfirmation] = useState({
+  const [
+    { uid: unbindUid, vendor: unbindVendor, open: unbindOpen },
+    setOpenUnbindConfirmation
+  ] = useState({
     open: false
   });
   const [openAdd, setOpenAdd] = useState(false);
@@ -33,7 +36,7 @@ const Gateway = observer(({ data }) => {
 
   const changed = data.name !== name || data.ip !== ip;
 
-  console.log(open, uid, vendor);
+  console.log(unbindOpen, unbindUid, unbindVendor);
 
   return (
     <Page loading={data.loading} title={`Gateway ${data.name}`}>
@@ -68,7 +71,7 @@ const Gateway = observer(({ data }) => {
               key={uid}
               uid={uid}
               vendor={vendor}
-              onUnbind={setOpenConfirmation}
+              onUnbind={setOpenUnbindConfirmation}
             />
           ))}
         </Table.Body>
@@ -84,6 +87,7 @@ const Gateway = observer(({ data }) => {
         onClose={useCallback(() => setOpenAdd(false), [])}
         onSave={console.log}
         bound={data.devices.map(({ uid }) => uid)}
+        onDelete={console.log}
       />
     </Page>
   );

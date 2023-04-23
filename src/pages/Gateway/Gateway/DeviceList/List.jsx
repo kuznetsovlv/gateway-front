@@ -2,15 +2,7 @@ import React, { useState, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react-lite';
 
-import {
-  AddButton,
-  Modal,
-  Button,
-  Table,
-  Checkbox,
-  DeleteButton
-} from 'components';
-import Icon from 'icon';
+import { AddButton, Modal, Button, Table } from 'components';
 import { useStore, ERROR_PROCESSOR_KEY } from 'StoreProvider';
 import {
   DeviceListStore,
@@ -19,6 +11,7 @@ import {
   DEVICE_MAP_STORE_KEY
 } from '../../store';
 import DeviceEditor from './DeviceEditor';
+import DeviceItem from './DeviceItem';
 
 const useDevice = (uid, open) => {
   const deviceRef = useRef(null);
@@ -53,7 +46,7 @@ const useDevice = (uid, open) => {
   return deviceRef.current;
 };
 
-const List = observer(({ data }) => {
+const List = observer(({ data, onDelete }) => {
   const [{ open, uid }, setOpenDevice] = useState({ open: false });
   const handleDeviceWindowClose = useCallback(() => {
     setOpenDevice({ open: false });
@@ -73,30 +66,17 @@ const List = observer(({ data }) => {
         </Table.Header>
         <Table.Body>
           {data.list.map(({ uid, vendor, selected, disabled, bound }) => (
-            <Table.Row key={uid}>
-              <Table.Cell>
-                <Checkbox
-                  checked={selected}
-                  disabled={disabled}
-                  name={uid}
-                  onChange={data.select}
-                />
-              </Table.Cell>
-              <Table.Cell>{vendor}</Table.Cell>
-              <Table.Cell>{uid}</Table.Cell>
-              <Table.Cell>
-                <Button
-                  type="ghost"
-                  circled
-                  onClick={() => setOpenDevice({ open: true, uid })}
-                >
-                  <Icon name="edit" />
-                </Button>
-              </Table.Cell>
-              <Table.Cell>
-                <DeleteButton disabled={bound} onClick={console.log} />
-              </Table.Cell>
-            </Table.Row>
+            <DeviceItem
+              key={uid}
+              uid={uid}
+              selectDisabled={disabled}
+              vendor={vendor}
+              selected={selected}
+              deleteDisabled={bound}
+              onSelect={data.select}
+              onEdit={setOpenDevice}
+              onDelete={onDelete}
+            />
           ))}
         </Table.Body>
       </Table>
@@ -138,6 +118,9 @@ const List = observer(({ data }) => {
   );
 });
 
-List.propTypes = { data: PropTypes.instanceOf(DeviceListStore).isRequired };
+List.propTypes = {
+  data: PropTypes.instanceOf(DeviceListStore).isRequired,
+  onDelete: PropTypes.func.isRequired
+};
 
 export default List;

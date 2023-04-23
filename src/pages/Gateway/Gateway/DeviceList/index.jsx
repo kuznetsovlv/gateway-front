@@ -7,7 +7,7 @@ import { useStore, ERROR_PROCESSOR_KEY } from 'StoreProvider';
 import List from './List';
 import { DeviceListStore } from '../../store';
 
-const DeviceList = observer(({ open, bound, onClose, onSave }) => {
+const DeviceList = observer(({ open, bound, onClose, onSave, onDelete }) => {
   const store = useStore();
   const dataRef = useRef(
     new DeviceListStore({
@@ -37,7 +37,7 @@ const DeviceList = observer(({ open, bound, onClose, onSave }) => {
           onClick={useCallback(() => {
             onSave(data.selected);
             onClose();
-          }, [data])}
+          }, [data, onClose])}
         >
           Apply
         </Button>,
@@ -47,7 +47,7 @@ const DeviceList = observer(({ open, bound, onClose, onSave }) => {
       ]}
       onClose={onClose}
     >
-      <List data={data} />
+      <List data={data} onDelete={onDelete} />
     </Modal>
   );
 });
@@ -56,7 +56,8 @@ DeviceList.propTypes = {
   open: PropTypes.bool,
   bound: PropTypes.arrayOf(PropTypes.number).isRequired,
   onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 DeviceList.defaultProps = { open: false };
