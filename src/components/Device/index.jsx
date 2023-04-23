@@ -28,7 +28,9 @@ const Device = ({
         []
       )}
     />
-    {uid && <Input label="uid" disabled value={uid} onChange={doNothing} />}
+    {uid && (
+      <Input label="uid" disabled value={String(uid)} onChange={doNothing} />
+    )}
     <Input
       label="vendor"
       disabled={disabled}

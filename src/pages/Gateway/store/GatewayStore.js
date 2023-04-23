@@ -33,7 +33,8 @@ export default class GatewayStore {
   /**
    * @private
    * @type {number|null}
-   */ $ip;
+   */
+  $ip;
   /**
    * @private
    * @type {number[]}
@@ -136,8 +137,11 @@ export default class GatewayStore {
     this.$loading = true;
 
     try {
-      const [{ serial, name, ip, devises }, deviceEntries] =
-        yield getGatewayData(this.$serial);
+      const result = yield getGatewayData(this.$serial);
+
+      console.log(result);
+
+      const [{ serial, name, ip, devises }, deviceEntries] = result;
 
       this.$serial = serial;
       this.$name = name;

@@ -1,5 +1,6 @@
 export AddButton from './AddButton';
 export Button from './Button';
+export Checkbox from './Checkbox';
 export CloseButton from './CloseButton';
 export DeleteButton from './DeleteButton';
 export Device from './Device';

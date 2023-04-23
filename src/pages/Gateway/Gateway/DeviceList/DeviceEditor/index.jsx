@@ -7,16 +7,17 @@ import { DeviceStore } from '../../../store';
 import styles from './DeviceEditor.module.scss';
 
 const DeviceEditor = observer(({ data }) => {
-  const [disabled, setDisabled] = useState(!!data.uid);
+  const [enabled, setEnabled] = useState(!data.uid);
+  const disabled = !enabled;
 
   return (
     <>
       {!!data.uid && (
         <Switcher
           className={styles.switcher}
-          checked={!disabled}
+          checked={enabled}
           onLabel="Edit"
-          onChange={setDisabled}
+          onChange={setEnabled}
         />
       )}
       <Device

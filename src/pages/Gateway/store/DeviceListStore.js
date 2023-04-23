@@ -53,11 +53,12 @@ export default class DeviceListStore {
 
     this.fetchData = this.fetchData.bind(this);
     this.delete = this.delete.bind(this);
+    this.select = this.select.bind(this);
   }
 
   /**
    * @public
-   * @return {(SimpleDevice&{bound: boolean, disabled: boolean, selected: *})[]}
+   * @return {(SimpleDevice&{bound: boolean, disabled: boolean, selected: boolean})[]}
    */
   get list() {
     const addDisabled = this.$selected.size >= MAX_DEVICES_PER_GATEWAY;
@@ -150,5 +151,18 @@ export default class DeviceListStore {
     }
 
     this.$loading = false;
+  }
+
+  /**
+   * @public
+   * @param {boolean} checked
+   * @param {number} uid
+   */
+  select(checked, uid) {
+    if (checked) {
+      this.$selected.add(uid);
+    } else {
+      this.$selected.delete(uid);
+    }
   }
 }
