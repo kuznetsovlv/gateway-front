@@ -50,7 +50,11 @@ export default class GatewayStore {
    * @type {boolean}
    */
   $loading;
-
+  /**
+   * @private
+   * @type {boolean}
+   */
+  $forceFetch;
   /**
    * @private
    * @type {ErrorProcessor}
@@ -71,6 +75,7 @@ export default class GatewayStore {
     this.$deviceList = observable([]);
     this.$deviceNameMap = observable(new Map());
     this.$loading = false;
+    this.$forceFetch = false;
 
     this.$fetch = this.$fetch.bind(this);
     this.$removeDevise = this.$removeDevise.bind(this);
@@ -110,6 +115,14 @@ export default class GatewayStore {
 
   /**
    * @public
+   * @return {number[]}
+   */
+  get bound() {
+    return this.$deviceList;
+  }
+
+  /**
+   * @public
    * @return {{vendor: string, uid: number}[]}
    */
   get devices() {
@@ -138,8 +151,6 @@ export default class GatewayStore {
 
     try {
       const result = yield getGatewayData(this.$serial);
-
-      console.log(result);
 
       const [{ serial, name, ip, devises }, deviceEntries] = result;
 
@@ -172,11 +183,11 @@ export default class GatewayStore {
 
   /**
    * @public
-   * @param {boolean} [force = false]
+
    * @return {Generator<Promise<SimpleDevice[]>, void, *>}
    */
-  *fetchDeviceList(force = false) {
-    if (!force && this.$loading) {
+  *fetchDeviceList() {
+    if (!this.$forceFetch && this.$loading) {
       return;
     }
 
@@ -193,6 +204,7 @@ export default class GatewayStore {
       this.$errorProcessor.putError(error);
     }
 
+    this.$forceFetch = false;
     this.$loading = false;
   }
 
@@ -251,13 +263,13 @@ export default class GatewayStore {
     try {
       const bound = yield bind(this.$serial, uids);
       if (bound.length) {
-        this.fetchDeviceList(true);
+        this.$forceFetch = true;
+        this.fetchDeviceList();
       }
     } catch (error) {
       this.$errorProcessor.putError(error);
+      this.$loading = false;
     }
-
-    this.$loading = false;
   }
 
   /**
@@ -274,12 +286,12 @@ export default class GatewayStore {
 
     try {
       yield unbind(this.$serial, uids);
-      this.fetchDeviceList(true);
+      this.$forceFetch = true;
+      this.fetchDeviceList();
     } catch (error) {
       this.$errorProcessor.putError(error);
+      this.$loading = false;
     }
-
-    this.$loading = false;
   }
 
   /**

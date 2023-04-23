@@ -22,6 +22,10 @@ const Gateway = observer(({ data }) => {
   ] = useState({
     open: false
   });
+  const [
+    { uid: deleteUid, vendor: deleteVendor, open: deleteOpen },
+    setOpenDeleteConfirmation
+  ] = useState({ open: false });
   const [openAdd, setOpenAdd] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const [name, setName] = useState(data.name);
@@ -37,6 +41,7 @@ const Gateway = observer(({ data }) => {
   const changed = data.name !== name || data.ip !== ip;
 
   console.log(unbindOpen, unbindUid, unbindVendor);
+  console.log(deleteOpen, deleteUid, deleteVendor);
 
   return (
     <Page loading={data.loading} title={`Gateway ${data.name}`}>
@@ -77,7 +82,7 @@ const Gateway = observer(({ data }) => {
         </Table.Body>
       </Table>
       <AddButton
-        text="Add device"
+        text="Edit device list"
         disabled={data.devices.length >= MAX_DEVICES_PER_GATEWAY || openAdd}
         onClick={useCallback(() => setOpenAdd(true), [])}
       />
@@ -85,9 +90,9 @@ const Gateway = observer(({ data }) => {
       <DeviceList
         open={openAdd}
         onClose={useCallback(() => setOpenAdd(false), [])}
-        onSave={console.log}
-        bound={data.devices.map(({ uid }) => uid)}
-        onDelete={console.log}
+        onSave={useCallback(devices => data.saveData({ devices }), [data])}
+        bound={data.bound}
+        onDelete={setOpenDeleteConfirmation}
       />
     </Page>
   );
